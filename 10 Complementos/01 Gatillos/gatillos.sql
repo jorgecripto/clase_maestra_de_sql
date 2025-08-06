@@ -22,11 +22,11 @@ SELECT * FROM auditoria_empleados;
 CREATE OR REPLACE FUNCTION auditar() RETURNS TRIGGER AS $auditar_empleados$
     BEGIN
         IF (TG_OP = 'DELETE') THEN
-            INSERT INTO auditoria_empleados SELECT 'D', now(), empleado, OLD.*;
+            INSERT INTO auditoria_empleados SELECT 'D', now(), user, OLD.*;
         ELSIF (TG_OP = 'UPDATE') THEN
-            INSERT INTO auditoria_empleados SELECT 'U', now(), empleado, NEW.*;
+            INSERT INTO auditoria_empleados SELECT 'U', now(), user, NEW.*;
         ELSIF (TG_OP = 'INSERT') THEN
-            INSERT INTO auditoria_empleados SELECT 'I', now(), empleado, NEW.*;
+            INSERT INTO auditoria_empleados SELECT 'I', now(), user, NEW.*;
         END IF;
         RETURN NULL;
     END;
